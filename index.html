@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Love 💜</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0bbec, #f4d9ff);
+      color: #4a004e;
+      text-align: center;
+    }
+    nav {
+      background-color: #f4d9ff;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      text-decoration: none;
+      color: #4a004e;
+      font-weight: bold;
+    }
+    .section {
+      display: none;
+      padding: 40px 20px;
+    }
+    .section.active {
+      display: block;
+    }
+    .title {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: #fff0fb;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 0 auto;
+      max-width: 600px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .placeholder {
+      font-style: italic;
+      color: #a670aa;
+    }
+    .questions {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .question {
+      background: #f3e4fb;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .gallery img, .gallery video {
+      width: 100%;
+      border-radius: 15px;
+      object-fit: cover;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    #hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="hearts"></canvas>
+
+  <nav>
+    <a href="#" onclick="showPage('passage')">💌 Passage</a>
+    <a href="#" onclick="showPage('questions')">💭 Questions</a>
+    <a href="#" onclick="showPage('memories')">📸 Memories</a>
+  </nav>
+
+  <div id="passage" class="section active">
+    <div class="title">Hi Love 💕</div>
+    <div class="card">
+      <p class="placeholder">[Hi baby...First of all Loveee Youuu Babbeeee....❤️❤️❤️.I'm very lucky to have you in my life.Your the most cuttiest pretiest cutie pewdiiii princess for me...❤️❤️❤️.You re the most special one and this is for you. Yes we fight a little bit but i promise you i will never leave you.My this suprise makes you feel happy..❤️❤️.Please go to the next section 'Question'Section and answer them on the whatsupp...and last but not the least see some of our memories by clicking on it...❤️❤️ ]</p>
+    </div>
+  </div>
+
+  <div id="questions" class="section">
+    <div class="title">Some Questions Just for You 💭</div>
+    <div class="questions">
+      <div class="question">What’s your favorite memory of us so far?</div>
+      <div class="question">If we could go anywhere in the world right now, where would we go?</div>
+      <div class="question">What’s something I do that always makes you smile?</div>
+    </div>
+  </div>
+
+  <div id="memories" class="section">
+    <div class="title">Our Moments 📸</div>
+    <div class="gallery">
+      <img src="C:\Users\hp\OneDrive\Desktop\it\WhatsApp Image 2025-04-09 at 8.16.04 PM.jpeg" alt="Photo 1">
+      <img src="C:\Users\hp\OneDrive\Desktop\it\WhatsApp Image 2025-04-09 at 8.16.06 PM.jpeg" alt="Photo 2">
+      <img src="C:\Users\hp\OneDrive\Desktop\it\WhatsApp Image 2025-04-09 at 8.16.18 PM.jpeg" alt="Photo 3">
+      <video src="C:\Users\hp\OneDrive\Desktop\it\WhatsApp Video 2025-04-09 at 8.16.33 PM.mp4" controls></video>
+      
+  </div>
+
+  <script>
+    const canvas = document.getElementById('hearts');
+    const ctx = canvas.getContext('2d');
+    let hearts = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function createHeart() {
+      return {
+        x: Math.random() * canvas.width,
+        y: canvas.height + 20,
+        size: 15 + Math.random() * 10,
+        speed: 1 + Math.random() * 2,
+        alpha: 1
+      };
+    }
+
+    function drawHeart(heart) {
+      ctx.globalAlpha = heart.alpha;
+      ctx.fillStyle = 'pink';
+      ctx.beginPath();
+      ctx.moveTo(heart.x, heart.y);
+      ctx.bezierCurveTo(heart.x + heart.size, heart.y - heart.size, heart.x + heart.size * 2, heart.y + heart.size, heart.x, heart.y + heart.size * 2);
+      ctx.bezierCurveTo(heart.x - heart.size * 2, heart.y + heart.size, heart.x - heart.size, heart.y - heart.size, heart.x, heart.y);
+      ctx.fill();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hearts.push(createHeart());
+      hearts.forEach((heart, index) => {
+        heart.y -= heart.speed;
+        heart.alpha -= 0.005;
+        drawHeart(heart);
+        if (heart.alpha <= 0) hearts.splice(index, 1);
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    function showPage(id) {
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
